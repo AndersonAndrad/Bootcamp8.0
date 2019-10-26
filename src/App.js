@@ -4,6 +4,9 @@ import express from 'express';
 // files
 import routes from './routes';
 
+// database
+import './database/index';
+
 class App{
   constructor(){
     this.server = express();
