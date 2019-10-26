@@ -5,12 +5,14 @@ import {Router} from 'express'
   // your code here
 
 // controllers
-  // your code here
+  import User from './app/controllers/UserController';
 
 const router = new Router();
 
 router.get('/test', (req, res) => {
   return res.json({Status: 'Your application is running...'});
 });
+
+router.get('/user', User.store);
 
 export default router;
