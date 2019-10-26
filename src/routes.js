@@ -13,6 +13,6 @@ router.get('/test', (req, res) => {
   return res.json({Status: 'Your application is running...'});
 });
 
-router.get('/user', User.store);
+router.post('/user', User.store);
 
 export default router;
