@@ -7,7 +7,7 @@ import config from '../config/database';
 // models
 import User from '../app/models/User';
 
-const models = [];
+const models = [User];
 
 class Database {
   constructor(){
@@ -16,7 +16,8 @@ class Database {
 
   init(){
     this.connection = new Sequelize(config);
-    models
-    .map(model => model.init(this.connection));
+    models.map(model => model.init(this.connection));
   }
 }
+
+export default new Database();
