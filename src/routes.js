@@ -2,7 +2,7 @@
 import {Router} from 'express'
 
 // middlewares
-  // your code here
+  import authMiddleware from './app/Middlewares/auth';
 
 // controllers
   import User from './app/controllers/UserController';
@@ -17,5 +17,9 @@ router.get('/test', (req, res) => {
 router.post('/user', User.store);
 
 router.post('/session', Session.store);
+
+router.use(authMiddleware);
+
+router.put('/user', User.update);
 
 export default router;
