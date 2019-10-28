@@ -6,6 +6,7 @@ import {Router} from 'express'
 
 // controllers
   import User from './app/controllers/UserController';
+  import Session from './app/controllers/SessionController';
 
 const router = new Router();
 
@@ -14,5 +15,7 @@ router.get('/test', (req, res) => {
 });
 
 router.post('/user', User.store);
+
+router.post('/session', Session.store);
 
 export default router;
