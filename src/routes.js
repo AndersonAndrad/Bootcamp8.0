@@ -9,6 +9,7 @@
   import User from './app/controllers/UserController';
   import Session from './app/controllers/SessionController';
   import File from './app/controllers/FileController';
+  import Provider from './app/controllers/ProviderController';
 
 // multer config
   import config from './config/multer';
@@ -29,5 +30,7 @@ router.use(authMiddleware);
 router.put('/user', User.update);
 
 router.post('/files', upload.single('file'), File.store);
+
+router.get('/providers', Provider.index);
 
 export default router;
