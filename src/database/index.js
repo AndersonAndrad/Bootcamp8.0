@@ -7,6 +7,7 @@ import config from '../config/database';
 // models
 import User from '../app/models/User';
 import File from '../app/models/File';
+import Appointment from '../app/models/Appoitment';
 
 const models = [User, File];
 
