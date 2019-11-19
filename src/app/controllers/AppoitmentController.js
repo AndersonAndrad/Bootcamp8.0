@@ -1,5 +1,6 @@
 // dendencies
 import * as yup from 'yup';
+import { startOfHour, parseISO, isBefore } from 'date-fns';
 
 // models
 import Appoitment from '../models/Appoitment';
@@ -29,10 +30,32 @@ class AppoitmentController {
       return res.status(401).json({ Status: 'Error, you can only create appointments with providers'});
     }
 
+    // check for past dates
+    const hourStart = startOfHour(parseISO(date));
+
+    if(isBefore(hourStart, new Date())){
+      return res.status(400).json({Status: 'Error, past dates are not permited'});
+    }
+
+    // check date availability
+    const checkAvailability = await Appoitment.findOne({ 
+      where: {
+        provider_id, 
+        canceled_at: null,
+        date: hourStart
+      }
+     });
+
+     if(checkAvailability){
+       return res.status(400).json({Status: 'Error, appointment date is not available'});
+     }
+
+
+
     const appointment = await Appoitment.create({
       user_id: req.userID,
       provider_id,
-      date
+      date: hourStart,
     }); 
 
     return res.json(appointment);
