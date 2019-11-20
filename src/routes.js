@@ -36,4 +36,6 @@ router.get('/providers', Provider.index);
 
 router.post('/appoitment', Appoitment.store);
 
+router.get('/appoitment', Appoitment.index);
+
 export default router;
