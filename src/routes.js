@@ -11,6 +11,7 @@
   import File from './app/controllers/FileController';
   import Provider from './app/controllers/ProviderController';
   import Appoitment from './app/controllers/AppoitmentController';
+  import Schedule from './app/controllers/ScheduleController';
 
 // multer config
   import config from './config/multer';
@@ -37,5 +38,7 @@ router.get('/providers', Provider.index);
 router.post('/appoitment', Appoitment.store);
 
 router.get('/appoitment', Appoitment.index);
+
+router.get('/schedule', Schedule.index);
 
 export default router;
