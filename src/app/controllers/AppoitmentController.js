@@ -63,6 +63,8 @@ class AppoitmentController {
   }
 
   async index(req, res){
+    const { page = 1 } = req.query;
+
     const appointments = await Appoitment.findAll({
       where:{
         user_id: req.userID,
@@ -70,6 +72,8 @@ class AppoitmentController {
       },
       order:[ 'date' ],
       attributes:['id','date'],
+      limit: 20,
+      offset:(page -1)  * 20,
       include:[
         {
           model: User,
