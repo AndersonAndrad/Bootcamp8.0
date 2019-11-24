@@ -52,3 +52,10 @@ exp: docker start database
 
 ***Remember that the setting that is path "src/config/database.js" is particulate, and you can change it at any time. If not change create the database of the same name that is there "bootcamp"***
 
+## Non-relational bank for notification
+
+```
+docker run --name database name -p 27017:27017 -d -t mongo
+docker run --name mongobarber -p 27017:27017 -d -t mongo
+```
+
