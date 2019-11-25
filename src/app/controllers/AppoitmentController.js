@@ -1,11 +1,14 @@
 // dendencies
 import * as yup from 'yup';
-import { startOfHour, parseISO, isBefore } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format } from 'date-fns';
 
 // models
 import Appoitment from '../models/Appoitment';
 import User from '../models/User';
 import File from '../models/File';
+
+// schemas
+import Notification from '../schemas/Notification';
 
 class AppoitmentController {
   async store(req, res) {
@@ -58,6 +61,19 @@ class AppoitmentController {
       provider_id,
       date: hourStart,
     }); 
+
+    // Notify appointment provider
+    const user = await User.findByPk(req.userID);
+    
+    const formattedDate = format(
+      hourStart,
+      "'for' MMMM dd', at' H:mm'h'"
+    );
+
+    await Notification.create({
+      content: `${user.name} new appointment ${formattedDate}`,
+      user: provider_id,
+    });
 
     return res.json(appointment);
   }
