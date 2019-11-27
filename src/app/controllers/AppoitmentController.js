@@ -23,6 +23,10 @@ class AppoitmentController {
 
     const {provider_id, date} = req.body;
 
+    if(provider_id == req.userID){
+      return res.status(400).json({Status: 'Error, you cannot book a service with yourself'});
+    }
+
     // check if provider_id is a provider
     const isProvider = await User.findOne({ 
       where: {
