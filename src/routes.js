@@ -44,4 +44,6 @@ router.get('/schedule', Schedule.index);
 
 router.get('/notifications', Notification.index);
 
+router.put('/notifications/:id', Notification.update);
+
 export default router;
