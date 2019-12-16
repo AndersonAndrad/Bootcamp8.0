@@ -40,6 +40,8 @@ router.post('/appoitment', Appoitment.store);
 
 router.get('/appoitment', Appoitment.index);
 
+router.delete('/appoitment/:id', Appoitment.delete);
+
 router.get('/schedule', Schedule.index);
 
 router.get('/notifications', Notification.index);
