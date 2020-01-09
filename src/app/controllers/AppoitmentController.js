@@ -11,7 +11,8 @@ import File from '../models/File';
 import Notification from '../schemas/Notification';
 
 // mail configuartion
-import Mail from '../../lib/Mail';
+import CancellationMail from '../jobs/CancellationMail';
+import Queue from '../../lib/Queue';
 
 class AppoitmentController {
   async store(req, res) {
@@ -116,9 +117,9 @@ class AppoitmentController {
 
   async delete(req, res){
     const appointment = await Appoitment.findByPk(req.params.id,
-      {
-        include: [
-          {
+    {
+      include: [
+        {
             model: User,
             as: 'provider',
             attributes: ['name', 'email']
@@ -147,19 +148,9 @@ class AppoitmentController {
 
     await appointment.save();
 
-    await Mail.sendMail({
-      to : `${appointment.provider.name} <${appointment.provider.email}>`,
-      subject: 'Schedule canceled',
-      template: 'cancellation',
-      context:{
-        provider: appointment.provider.name,
-        user: appointment.user.name,
-        date: format(
-          appointment.date,
-          "'for' MMMM dd', at' H:mm'h'"
-        )
-      }
-    });
+   await Queue.add(CancellationMail.Key, {
+     appointment,
+   });
 
     return res.json(appointment);
   }
