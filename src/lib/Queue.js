@@ -1,37 +1,37 @@
-// dependences 
+// dependencies 
 import Bee from 'bee-queue';
 
 // files
+import redisConfig from '../config/redis';
+
+// jobs
 import CancellationMail from '../app/jobs/CancellationMail';
-import RedisConfig from '../config/redis';
 
 const jobs = [CancellationMail];
 
 class Queue {
-  constructor(){
+  constructor() {
     this.queues = {};
-    
+
     this.init();
   }
 
   init() {
-    jobs.forEach(({ key, handle }) => {
-      this.queues[key] = {
-        bee: new Bee(key, {
-          redis: RedisConfig,
-        }),
+    jobs.forEach(({ Key, handle}) => {
+      this.queues[Key] = {
+        bee: new Bee(Key, { redis: redisConfig }),
         handle,
-      };
+      }
     });
   }
 
-  add (queue, job) {
-    return this.queues[queue].bee.createJob(job).save();
+  add(queue, job) {
+    return this.queues[queue].bee.createJob(job).save();  
   }
 
   processQueue() {
     jobs.forEach(job => {
-      const { bee, handle } = this.queues[job.key];
+      const { bee, handle } = this.queues[job.Key];
 
       bee.process(handle);
     });
