@@ -13,6 +13,7 @@
   import Appoitment from './app/controllers/AppoitmentController';
   import Schedule from './app/controllers/ScheduleController';
   import Notification from './app/controllers/NotificationController';
+  import Avaliable from './app/controllers/AvaliableController';
 
 // multer config
   import config from './config/multer';
@@ -35,6 +36,8 @@ router.put('/user', User.update);
 router.post('/files', upload.single('file'), File.store);
 
 router.get('/providers', Provider.index);
+
+router.get('/providers/:providerId/avaliable', Avaliable.index);
 
 router.post('/appoitment', Appoitment.store);
 
